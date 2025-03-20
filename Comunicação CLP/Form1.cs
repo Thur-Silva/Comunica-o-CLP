@@ -8,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using EasyModbus;
 
 namespace Comunicação_CLP
 {
@@ -17,6 +18,8 @@ namespace Comunicação_CLP
         {
             InitializeComponent();
         }
+
+        ModbusClient CLP_connectionPort = new ModbusClient("192.168.30.13", 502);
 
         private void Minimizar_Click(object sender, EventArgs e)
         {
@@ -29,6 +32,9 @@ namespace Comunicação_CLP
             {
 
                 this.WindowState = FormWindowState.Normal;
+                Minimizar.Location = new Point(653, 12);
+                Maximizar.Location = new Point(704, 12);
+                Fechar.Location = new Point(755, 12);
             }
             else
             {
@@ -87,7 +93,60 @@ namespace Comunicação_CLP
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            try
+            {
+                CLP_connectionPort.UnitIdentifier = 255;
+                CLP_connectionPort.Connect();
+                timer1.Enabled =true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar com o CLP: " + ex.Message);
+            }
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            CLP_connectionPort.WriteSingleCoil(0, false);
+        }
+
+        private void BTNligar_MouseHover(object sender, EventArgs e)
+        {
+            BTNligar.BackColor = Color.Lime;
+        }
+
+        private void BTNdesligar_MouseHover(object sender, EventArgs e)
+        {
+            BTNdesligar.BackColor = Color.Red;
+        }
+
+        private void BTNdesligar_MouseLeave(object sender, EventArgs e)
+        {
+            BTNdesligar.BackColor = Color.FromArgb(255, 192, 192);
+        }
+
+        private void BTNligar_MouseLeave(object sender, EventArgs e)
+        {
+            BTNligar.BackColor = Color.FromArgb(192, 255, 192);
+        }
+
+        private void BTNligar_Click(object sender, EventArgs e)
+        {
+            CLP_connectionPort.WriteSingleCoil(0, true);
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                bool[] COIL;
+                COIL = CLP_connectionPort.ReadCoils(0, 1);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao conectar com o CLP: " + ex.Message);
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Comunicação_CLP
     internal static class Program
     {
         /// <summary>
-        /// Ponto de entrada principal para o aplicativo.
+        /// Ponto de entrada principal para o aplicativoz.
         /// </summary>
         [STAThread]
         static void Main()

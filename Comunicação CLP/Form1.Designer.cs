@@ -28,10 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Fechar = new System.Windows.Forms.PictureBox();
             this.Maximizar = new System.Windows.Forms.PictureBox();
             this.Minimizar = new System.Windows.Forms.PictureBox();
+            this.BTNligar = new System.Windows.Forms.Button();
+            this.BTNdesligar = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Fechar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Maximizar)).BeginInit();
@@ -68,6 +72,7 @@
             // 
             this.Maximizar.BackgroundImage = global::Comunicação_CLP.Properties.Resources.maximizar_icon;
             this.Maximizar.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.Maximizar.Enabled = false;
             this.Maximizar.Location = new System.Drawing.Point(704, 12);
             this.Maximizar.Name = "Maximizar";
             this.Maximizar.Size = new System.Drawing.Size(33, 33);
@@ -90,11 +95,46 @@
             this.Minimizar.MouseLeave += new System.EventHandler(this.Minimizar_MouseLeave);
             this.Minimizar.MouseHover += new System.EventHandler(this.Minimizar_MouseHover);
             // 
+            // BTNligar
+            // 
+            this.BTNligar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.BTNligar.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTNligar.Location = new System.Drawing.Point(85, 95);
+            this.BTNligar.Name = "BTNligar";
+            this.BTNligar.Size = new System.Drawing.Size(209, 297);
+            this.BTNligar.TabIndex = 2;
+            this.BTNligar.Text = "Ligar";
+            this.BTNligar.UseVisualStyleBackColor = false;
+            this.BTNligar.Click += new System.EventHandler(this.BTNligar_Click);
+            this.BTNligar.MouseLeave += new System.EventHandler(this.BTNligar_MouseLeave);
+            this.BTNligar.MouseHover += new System.EventHandler(this.BTNligar_MouseHover);
+            // 
+            // BTNdesligar
+            // 
+            this.BTNdesligar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            this.BTNdesligar.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTNdesligar.Location = new System.Drawing.Point(497, 95);
+            this.BTNdesligar.Name = "BTNdesligar";
+            this.BTNdesligar.Size = new System.Drawing.Size(209, 297);
+            this.BTNdesligar.TabIndex = 3;
+            this.BTNdesligar.Text = "Desligar";
+            this.BTNdesligar.UseVisualStyleBackColor = false;
+            this.BTNdesligar.Click += new System.EventHandler(this.button2_Click);
+            this.BTNdesligar.MouseLeave += new System.EventHandler(this.BTNdesligar_MouseLeave);
+            this.BTNdesligar.MouseHover += new System.EventHandler(this.BTNdesligar_MouseHover);
+            // 
+            // timer1
+            // 
+            this.timer1.Interval = 500;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BTNdesligar);
+            this.Controls.Add(this.BTNligar);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Form1";
@@ -114,6 +154,9 @@
         private System.Windows.Forms.PictureBox Fechar;
         private System.Windows.Forms.PictureBox Maximizar;
         private System.Windows.Forms.PictureBox Minimizar;
+        private System.Windows.Forms.Button BTNligar;
+        private System.Windows.Forms.Button BTNdesligar;
+        private System.Windows.Forms.Timer timer1;
     }
 }
 
