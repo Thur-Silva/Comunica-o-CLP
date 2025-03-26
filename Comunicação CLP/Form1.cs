@@ -1,18 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using EasyModbus;
-using MySql.Data;
 using MySql.Data.MySqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Comunicação_CLP
 {
@@ -138,7 +129,7 @@ namespace Comunicação_CLP
 
 
 
-        int QuantidadeDePeca = 0;
+
         private void Form1_Load(object sender, EventArgs e)
         {
             CarregarComboBox();
@@ -146,8 +137,8 @@ namespace Comunicação_CLP
             {
                 CLP_connectionPort.UnitIdentifier = 255;
                 CLP_connectionPort.Connect();
-                
-                timer1.Enabled =true;
+
+                timer1.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -158,19 +149,31 @@ namespace Comunicação_CLP
         int AcessOFFControl = 1;
         private void button2_Click(object sender, EventArgs e)
         {
-            CLP_connectionPort.WriteSingleCoil(0, false);
 
-
-            AcessOFFControl++;
-            if (AcessOFFControl % 2 == 0)
+            int DesligaMotor = 1;
+            try
             {
-                BTNligar.BackColor = Color.Red;
+
+                CLP_connectionPort.WriteSingleRegister(3, DesligaMotor); // TENTA DESLIGAR O MOTOR
+                
+                AcessOFFControl++;
+
+                
+                if (AcessOFFControl % 2 == 0)
+                {
+                    BTNdesligar.BackColor = Color.Red; 
+                }
+                else
+                {
+                    BTNdesligar.BackColor = Color.FromArgb(255, 192, 192);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                BTNdesligar.BackColor = Color.FromArgb(255, 192, 192);
+                MessageBox.Show("Erro ao desligar o motor: " + ex.Message);
             }
         }
+
 
         private void BTNligar_MouseHover(object sender, EventArgs e)
         {
@@ -192,27 +195,67 @@ namespace Comunicação_CLP
             BTNligar.BackColor = Color.FromArgb(192, 255, 192);
         }
 
-        int AcessONControl = 1;  
+        int AcessONControl = 1;
         private void BTNligar_Click(object sender, EventArgs e)
         {
-
-
+            int QuantidadeDePeca = 0; 
             string produto = CBXescolha.Text;
-            if (produto == "")
+
+
+            if (string.IsNullOrEmpty(produto))
             {
                 MessageBox.Show("Selecione um produto");
                 return;
             }
-            else
+
+            try // pegando a quantidade de peças do produto selecionado no DB e armazenando na variável produto
             {
-                string query = "SELECT qtd FROM produtos WHERE nome = '" + produto + "'";
-                CLP_connectionPort.WriteSingleRegister(QuantidadeDePeca, 1);
+                using (MySqlConnection conn = new MySqlConnection(CONFIG_CONEXAO_BD))
+                {
+                    conn.Open();
+                    string query = "SELECT qtd FROM produtos WHERE nome = @nome";
+
+                    using (MySqlCommand cmd = new MySqlCommand(query, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@nome", produto);
+                        using (MySqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.Read())
+                            {
+                                QuantidadeDePeca = Convert.ToInt32(reader["qtd"]);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Produto não encontrado.");
+                                return;
+                            }
+                        }
+                    }
+                }
             }
-            
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar dados: " + ex.Message);
+                return;
+            }
+
+          
+            try
+            {
+                CLP_connectionPort.WriteSingleRegister(9, QuantidadeDePeca);
+                CLP_connectionPort.WriteSingleCoil(1, true); // resetando o contador
+                CLP_connectionPort.WriteSingleCoil(0, true);    // ligando o motor
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao escrever no CLP: " + ex.Message);
+            }
+        
+
 
 
             AcessONControl++;
-            if (AcessONControl % 2 ==0)
+            if (AcessONControl % 2 == 0)
             {
                 BTNligar.BackColor = Color.Lime;
             }
@@ -234,6 +277,11 @@ namespace Comunicação_CLP
             {
                 MessageBox.Show("Erro ao conectar com o CLP: " + ex.Message);
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -36,8 +36,9 @@
             this.BTNligar = new System.Windows.Forms.Button();
             this.BTNdesligar = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.CBXescolha = new System.Windows.Forms.ComboBox();
             this.LBLtitle = new System.Windows.Forms.Label();
+            this.CBXescolha = new System.Windows.Forms.ComboBox();
+            this.BTNpausa = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Fechar)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Maximizar)).BeginInit();
@@ -103,7 +104,7 @@
             this.BTNligar.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BTNligar.Location = new System.Drawing.Point(85, 336);
             this.BTNligar.Name = "BTNligar";
-            this.BTNligar.Size = new System.Drawing.Size(269, 56);
+            this.BTNligar.Size = new System.Drawing.Size(186, 56);
             this.BTNligar.TabIndex = 2;
             this.BTNligar.Text = "Ligar";
             this.BTNligar.UseVisualStyleBackColor = false;
@@ -115,9 +116,9 @@
             // 
             this.BTNdesligar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.BTNdesligar.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.BTNdesligar.Location = new System.Drawing.Point(497, 336);
+            this.BTNdesligar.Location = new System.Drawing.Point(556, 336);
             this.BTNdesligar.Name = "BTNdesligar";
-            this.BTNdesligar.Size = new System.Drawing.Size(240, 56);
+            this.BTNdesligar.Size = new System.Drawing.Size(181, 56);
             this.BTNdesligar.TabIndex = 3;
             this.BTNdesligar.Text = "Desligar";
             this.BTNdesligar.UseVisualStyleBackColor = false;
@@ -130,14 +131,6 @@
             this.timer1.Interval = 500;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // CBXescolha
-            // 
-            this.CBXescolha.FormattingEnabled = true;
-            this.CBXescolha.Location = new System.Drawing.Point(295, 166);
-            this.CBXescolha.Name = "CBXescolha";
-            this.CBXescolha.Size = new System.Drawing.Size(221, 21);
-            this.CBXescolha.TabIndex = 5;
-            // 
             // LBLtitle
             // 
             this.LBLtitle.AutoSize = true;
@@ -148,12 +141,33 @@
             this.LBLtitle.TabIndex = 6;
             this.LBLtitle.Text = "SELECIONE UMA PEÇA";
             // 
+            // CBXescolha
+            // 
+            this.CBXescolha.FormattingEnabled = true;
+            this.CBXescolha.Location = new System.Drawing.Point(295, 166);
+            this.CBXescolha.Name = "CBXescolha";
+            this.CBXescolha.Size = new System.Drawing.Size(221, 21);
+            this.CBXescolha.TabIndex = 5;
+            // 
+            // BTNpausa
+            // 
+            this.BTNpausa.BackColor = System.Drawing.Color.Gray;
+            this.BTNpausa.Font = new System.Drawing.Font("Microsoft Sans Serif", 26.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.BTNpausa.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BTNpausa.Location = new System.Drawing.Point(321, 336);
+            this.BTNpausa.Name = "BTNpausa";
+            this.BTNpausa.Size = new System.Drawing.Size(186, 56);
+            this.BTNpausa.TabIndex = 7;
+            this.BTNpausa.Text = "Pause";
+            this.BTNpausa.UseVisualStyleBackColor = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Snow;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.BTNpausa);
             this.Controls.Add(this.LBLtitle);
             this.Controls.Add(this.CBXescolha);
             this.Controls.Add(this.BTNdesligar);
@@ -181,8 +195,9 @@
         private System.Windows.Forms.Button BTNligar;
         private System.Windows.Forms.Button BTNdesligar;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.ComboBox CBXescolha;
         private System.Windows.Forms.Label LBLtitle;
+        private System.Windows.Forms.ComboBox CBXescolha;
+        private System.Windows.Forms.Button BTNpausa;
     }
 }
 
